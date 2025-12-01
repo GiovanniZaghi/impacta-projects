@@ -1,11 +1,10 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:impacta_project/app/core/messages.dart';
 import 'package:impacta_project/app/features/register/cubit/register_bloc_state.dart';
 import 'package:intl/intl.dart';
+
 import '../login/widget/input_widget.dart';
 import 'cubit/register_bloc_cubit.dart';
 
@@ -24,22 +23,6 @@ class _RegisterPageState extends State<RegisterPage>
   final TextEditingController senhaController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
-
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2000, 1, 1),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      locale: const Locale('pt', 'BR'),
-    );
-
-    if (picked != null) {
-      setState(() {
-        dataController.text = DateFormat('dd/MM/yyyy').format(picked);
-      });
-    }
-  }
 
   bool _isValidDate(String value) {
     try {
@@ -69,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage>
         state.status.matchAny(
           success: () async {
             showSuccess("Login efetuado com sucesso");
-            Get.toNamed("/home");
+            Get.toNamed("/home_board");
           },
           error: () {
             showError(state.errorMessage ?? "Erro não informado");

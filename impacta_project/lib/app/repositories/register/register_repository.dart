@@ -27,7 +27,6 @@ class RegisterRepository implements IRegisterRepository {
         "password": password,
         "birthday": birthday,
       });
-      print("Body > ${body}");
 
       var response = await http.post(
         Uri.parse(url),
@@ -36,7 +35,6 @@ class RegisterRepository implements IRegisterRepository {
       );
 
       var jsonData = jsonDecode(response.body);
-      print("Json > ${jsonData}");
 
       var res = UserModel.fromJson(jsonData);
 

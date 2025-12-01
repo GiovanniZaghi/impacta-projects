@@ -20,7 +20,6 @@ class LoginRepository implements ILoginRepository {
 
       var url = 'http://10.0.2.2:3000/users/login';
       final body = jsonEncode({"email": email, "password": password});
-      print("Body > ${body}");
 
       var response = await http.post(
         Uri.parse(url),
@@ -29,11 +28,18 @@ class LoginRepository implements ILoginRepository {
       );
 
       var jsonData = jsonDecode(response.body);
-      print("Json > ${jsonData}");
 
       var res = UserModel.fromJson(jsonData['user']);
 
-      print("Res > ${res.toString()}");
+      await prefs.setInt('id', jsonData['user']['id']);
+      await prefs.setString(
+        'name',
+        jsonData['user']['name'].toString().toLowerCase(),
+      );
+      await prefs.setString(
+        'email',
+        jsonData['user']['email'].toString().toLowerCase(),
+      );
 
       return res;
     } catch (e) {
